@@ -1,0 +1,59 @@
+import Toasted from 'vue-toasted';
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+require('./bootstrap');
+
+window.Vue = require('vue');
+
+let toastedOptions = {
+    theme: "toasted-primary", 
+	position: "top-right", 
+    duration : 5000,
+    iconPack : 'fontawesome',
+};
+
+Vue.use(Toasted, toastedOptions);
+
+Vue.mixin({
+    methods: {
+        msgSuccess(message) 
+        {
+            this.$toasted.success(message, {icon: 'check'});
+        },
+        msgInfo(message) 
+        {
+            this.$toasted.info(message, {icon: 'info'});
+        },
+        msgError(message) 
+        {
+            this.$toasted.error(message, {icon: 'exclamation-circle'});
+        },
+    }
+});
+
+/**
+ * The following block of code may be used to automatically register your
+ * Vue components. It will recursively scan this directory for the Vue
+ * components and automatically register them with their "basename".
+ *
+ * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
+ */
+
+// const files = require.context('./', true, /\.vue$/i);
+// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
+
+Vue.component('settings-sidebar', require('./components/settings/SideBar.vue').default);
+
+/**
+ * Next, we will create a fresh Vue application instance and attach it to
+ * the page. Then, you may begin adding components to this application
+ * or customize the JavaScript scaffolding to fit your unique needs.
+ */
+
+const app = new Vue({
+    el: '#app',
+});
