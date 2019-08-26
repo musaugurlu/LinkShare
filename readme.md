@@ -1,3 +1,3 @@
-# InstaShopMatic
+# LinkShare
 
 Under Development
