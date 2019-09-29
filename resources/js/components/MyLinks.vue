@@ -40,7 +40,8 @@
         </div>
       </div>
       <div class="ta-c bdT w-100 p-20">
-      <a href="#" @click.prevent="fetchData()">Updated at {{ synchTime | humanDate(false) }}</a>
+      <a href="#" @click.prevent="fetchData()" v-if="synchTime">Updated at {{ synchTime | humanDate(true) }}</a>
+      <a href="#" @click.prevent="fetchData()" v-else>Updated Failed. Click to update!</a>      
       </div>
     </div>
   </div>
