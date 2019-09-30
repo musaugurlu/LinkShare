@@ -12,12 +12,12 @@ class Link extends Model
      * @var array
      */
     protected $fillable = [
-        'nameurl', 'link_group_id', 'user_id',
+        'url', 'user_id',
     ];
 
-    public function LinkGroup()
+    public function LinkGroups()
     {
-        return $this->belongsTo(LinkGroup::class);
+        return $this->belongsToMany(LinkGroup::class);
     }
 
     public function User()

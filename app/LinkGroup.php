@@ -27,6 +27,6 @@ class LinkGroup extends Model
 
     public function Links()
     {
-        return $this->hasMany(Link::class);
+        return $this->belongsToMany(Link::class);
     }
 }

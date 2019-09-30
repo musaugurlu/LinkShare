@@ -8,7 +8,6 @@ use Faker\Generator as Faker;
 $factory->define(Link::class, function (Faker $faker) {
     return [
         'url' => $faker->url,
-        'user_id' => 1,
-        'link_group_id' => 1
+        'user_id' => 1
     ];
 });

@@ -86,7 +86,7 @@ class LinkGroupController extends Controller
 
     public function apiLinkGroups(Request $request)
     {
-        $LinkGroups = Auth::User()->load('links', 'linkGroups');
+        $LinkGroups = LinkGroup::where('user_id',Auth::user()->id)->with('links')->get();
 
         return $LinkGroups;
     }

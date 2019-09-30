@@ -18,7 +18,6 @@ class CreateLinksTable extends Migration
             $table->string('url');
             $table->timestamps();
 
-            $table->unsignedBigInteger('link_group_id')->nullable();
             $table->unsignedBigInteger('user_id');
         });
     }

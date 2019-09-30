@@ -86,7 +86,8 @@ class LinkController extends Controller
 
     public function apiLinks(Request $request)
     {
-        $Links = Auth::User()->load('links', 'linkGroups');
+        // $Links = Auth::User()->load('links', 'linkGroups');
+        $Links = Link::where('user_id', Auth::user()->id)->with('linkGroups')->get();
 
         return $Links;
     }

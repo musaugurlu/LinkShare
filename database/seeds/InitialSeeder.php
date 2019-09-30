@@ -20,9 +20,10 @@ class InitialSeeder extends Seeder
                 'remember_token' => Str::random(10),
             ]);
         }
+        
         factory(App\User::class, 5)->create();
         factory(App\Share::class, 3)->create();
-        factory(App\LinkGroup::class, 5)->create();
-        factory(App\Link::class, 10)->create();
+        factory(App\LinkGroup::class, 10)->create();
+        factory(App\Link::class, 20)->create();
     }
 }

@@ -29,7 +29,7 @@
                 <tr v-for="(linkgroup, index) in linkGroups" :key="index">
                   <td>{{ index + 1 }}</td>
                   <td class="fw-600"><a :href="linkgroup.name">{{ linkgroup.name }}</a></td>
-                  <td><span class="badge bgc-red-50 c-red-700 p-10 lh-0 tt-c badge-pill">{{ getNumberOfLinks(linkgroup) }}</span> </td>
+                  <td><span class="badge bgc-red-50 c-red-700 p-10 lh-0 tt-c badge-pill">{{ linkgroup.links.length }}</span> </td>
                   <td>{{ linkgroup.created_at | humanDate(humanTime) }}</td>
                   <td><span class="text-success">{{ linkgroup.updated_at | humanDate(humanTime) }}</span></td>
                   <td>
@@ -54,7 +54,6 @@
 export default {
 data() {
     return {
-      'links': [],
       'linkGroups': [],
       'humanTime' : true,
       'synchTime' : ""
@@ -66,14 +65,9 @@ data() {
       axios.post('/api/linkgroups')
             .then(response => {
               this.synchTime = Date.now();
-              this.links = response.data.links;
-              this.linkGroups = response.data.link_groups;
+              this.linkGroups = response.data;
             });
     },
-    
-    getNumberOfLinks (linkGroup) {
-      return this.links.filter(l => l.link_group_id === linkGroup.id).length;
-    }
   },
 
   computed: {
