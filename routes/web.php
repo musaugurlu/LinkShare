@@ -25,6 +25,8 @@ Route::middleware('auth')->group(function (){
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/settings', 'SettingController@index')->name('settings');
     Route::get('/links', 'LinkController@index')->name('links');
-    Route::get('linkgroups','LinkGroupController@index')->name('linkgroups');
+    Route::get('/linkgroups','LinkGroupController@index')->name('linkgroups');
+    Route::get('/linkgroups/{id}','LinkGroupController@show')->name('onelinkgroup');
+    Route::get('/links/{id}','LinkController@show')->name('onelink');
 });
 

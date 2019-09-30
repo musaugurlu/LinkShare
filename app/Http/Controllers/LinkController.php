@@ -47,7 +47,7 @@ class LinkController extends Controller
      */
     public function show(Link $link)
     {
-        //
+        return view('onelink',['link' => $link]);
     }
 
     /**

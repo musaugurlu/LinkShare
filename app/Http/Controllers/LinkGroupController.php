@@ -47,7 +47,7 @@ class LinkGroupController extends Controller
      */
     public function show(LinkGroup $linkGroup)
     {
-        //
+        return view('onelinkgroup',['linkgroup' => $linkGroup]);
     }
 
     /**
