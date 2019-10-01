@@ -29,11 +29,19 @@
                       <div class="modal-header">
                         <h5 class="modal-title" id="NewModelLabel">New URL</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">×</span>
+                          <span aria-hidden="true" @click="clearForm(true)">×</span>
                         </button>
                       </div>
                       <form @submit.prevent="submitNewForm">
                         <div class="modal-body">
+                          <div class="alert alert-danger" v-if="Object.keys(formErrors).length">
+                            <ul>
+                              <li v-for="(error, index) in formErrors" :key="index">ERROR: {{error[0]}}</li>
+                            </ul>
+                          </div>
+                          <div class="alert alert-success" v-if="formSuccess">
+                            Yay! New Link has been created.
+                          </div>
                           <div class="row">
                             <div class="col-md-12 mb-12">
                               <label>URL</label>
@@ -58,7 +66,7 @@
                           </div>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="clearForm(true)">Close</button>
                           <button type="submit" class="btn" :class="{'btn-primary' : validateUrl}" :disabled="!validateUrl">Save</button>
                         </div>
                       </form>
@@ -100,13 +108,13 @@
                     <span class="text-success">{{ link.updated_at | humanDate(humanTime) }}</span>
                   </td>
                   <td>
-                    <button type="button" class="btn btn-sm btn-outline-info" @click.prevent="goToUrl(link.url)">
+                    <button type="button" title="Visit" class="btn btn-sm btn-outline-info" @click.prevent="goToUrl(link.url)">
                       <i class="mC-10 ti-eye"></i>
                     </button>
-                    <button type="button" class="btn btn-sm btn-outline-info">
+                    <button type="button" title="Edit" class="btn btn-sm btn-outline-info">
                       <i class="mC-10 ti-pencil"></i>
                     </button>
-                    <button type="button" class="btn btn-sm btn-outline-danger">
+                    <button type="button" title="Delete" class="btn btn-sm btn-outline-danger">
                       <i class="mC-10 ti-trash"></i>
                     </button>
                   </td>
@@ -134,12 +142,17 @@ export default {
     return {
       linkGroups: [],
       links: [],
+      
       humanTime: true,
-      synchTime: "",
+      synchTime: '',
+      
       newUrl: {
         url:'',
         linkgroup: ''
-      }
+      },
+      
+      formErrors:[],
+      formSuccess:false
     };
   },
 
@@ -176,11 +189,29 @@ export default {
     },
 
     submitNewForm () {
+      this.formErrors = [];
+      this.formSuccess = false;
+      
       axios.post('/api/links/new', this.newUrl)
-        .then(response => {
-          console.log('success!');
-          console.log(response.data);
+        .then(response => { 
+          this.links.push(resonse.data);
+          this.formSuccess = true;
+          this.clearForm();
+        })
+        .catch(error => {
+          this.formErrors = error.response.data.errors;
+          this.clearForm();
         });
+    },
+
+    clearForm (isClose=false) {
+      this.newUrl.url = ''; 
+      this.newUrl.linkgroup = '';
+
+      if (isClose) {
+        this.formErrors = [];
+        this.formSuccess = false;
+      }
     }
   },
 

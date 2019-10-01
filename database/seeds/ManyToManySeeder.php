@@ -9,11 +9,9 @@ class ManyToManySeeder extends Seeder
         $links = App\Link::all();
 
         App\LinkGroup::all()->each(function ($lg) use ($links) {
-            // $lg->links()->attach(
-            //     $links->random(rand(1,1))->pluck('id')->toArray()
-            // );
-
-            $lg->links()->attach(1);
+            $lg->links()->attach(
+                $links->random(rand(1,$links->count()))->pluck('id')->toArray()
+            );
         });
     }
 }

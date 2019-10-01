@@ -15,7 +15,7 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('User_Id')->Unsigned();
+            $table->unsignedBigInteger('user_id');
             $table->boolean('S1'); //Sidebar Close/Open -> Default: Close
             $table->timestamps();
         });

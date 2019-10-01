@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Link;
+use App\LinkGroup;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -86,9 +87,38 @@ class LinkController extends Controller
 
     public function apiLinks(Request $request)
     {
-        // $Links = Auth::User()->load('links', 'linkGroups');
         $Links = Link::where('user_id', Auth::user()->id)->with('linkGroups')->get();
 
         return $Links;
+    }
+    
+    public function apiNewLink(Request $request)
+    {
+        $validatedData = $request->validate([
+            'url' => 'required|url|unique:links|max:512',
+            'linkgroup' => 'nullable|exists:link_groups,id',
+        ]);
+
+        $formError = [];
+        
+        try {
+            $newLink = Auth::user()->links()->create(['url' => $request->url]);
+        } catch (Exception $e) {
+            array_push($formError,"coud not create the link");
+        }
+
+        if ($request->linkgroup) {
+            try {
+                LinkGroup::findOrFail($request->linkgroup)->links()->attach($newLink->id);
+            } catch (Exception $e) {
+                array_push($formError,"coud not associate the link with link group.");
+            }
+        }
+
+        if ($newLink) {
+            return Link::where('id',$newLink->id)->with('linkGroups')->get();
+        } else {
+            return response(422,$formError);
+        }
     }
 }

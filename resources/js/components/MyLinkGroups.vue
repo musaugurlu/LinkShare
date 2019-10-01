@@ -33,9 +33,9 @@
                   <td>{{ linkgroup.created_at | humanDate(humanTime) }}</td>
                   <td><span class="text-success">{{ linkgroup.updated_at | humanDate(humanTime) }}</span></td>
                   <td>
-                      <button type="button" class="btn btn-sm btn-outline-info"><i class="mC-10 ti-share"></i></button>
-                      <button type="button" class="btn btn-sm btn-outline-info"><i class="mC-10 ti-pencil"></i></button> 
-                      <button type="button" class="btn btn-sm btn-outline-danger"><i class="mC-10 ti-trash"></i></button>
+                      <button type="button" title="Share" class="btn btn-sm btn-outline-info"><i class="mC-10 ti-share"></i></button>
+                      <button type="button" title="Edit" class="btn btn-sm btn-outline-info"><i class="mC-10 ti-pencil"></i></button> 
+                      <button type="button" title="Delete" class="btn btn-sm btn-outline-danger"><i class="mC-10 ti-trash"></i></button>
                   </td>
                 </tr>   
               </tbody>

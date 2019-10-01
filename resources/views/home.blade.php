@@ -23,7 +23,7 @@
       <div class="col-md-3">
         <div class="layers bd bgc-white p-20">
           <div class="layer w-100 mB-10">
-            <h6 class="lh-1">Total Page Views</h6>
+            <h6 class="lh-1">Total Links</h6>
           </div>
           <div class="layer w-100">
             <div class="peers ai-sb fxw-nw">
@@ -37,7 +37,7 @@
       <div class="col-md-3">
         <div class="layers bd bgc-white p-20">
           <div class="layer w-100 mB-10">
-            <h6 class="lh-1">Unique Visitor</h6>
+            <h6 class="lh-1">Total Link Groups</h6>
           </div>
           <div class="layer w-100">
             <div class="peers ai-sb fxw-nw">
@@ -52,7 +52,7 @@
       <div class="col-md-3">
         <div class="layers bd bgc-white p-20">
           <div class="layer w-100 mB-10">
-            <h6 class="lh-1">Bounce Rate</h6>
+            <h6 class="lh-1">Total Views</h6>
           </div>
           <div class="layer w-100">
             <div class="peers ai-sb fxw-nw">
@@ -71,15 +71,11 @@
     <!-- #Sales Report ==================== -->
     <div class="bd bgc-white">
       <div class="layers">
-        <div class="layer w-100 p-20">
-          <h6 class="lh-1">Sales Report</h6>
-        </div>
         <div class="layer w-100">
           <div class="bgc-light-blue-500 c-white p-20">
             <div class="peers ai-c jc-sb gap-40">
               <div class="peer peer-greed">
-                <h5>November 2017</h5>
-                <p class="mB-0">Sales Report</p>
+                <h3>November 2017</h3>
               </div>
               <div class="peer">
                 <h3 class="text-right">$6,000</h3>

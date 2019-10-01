@@ -13,10 +13,13 @@ class CreateLinkLinkGroupPivotTable extends Migration
     public function up()
     {
         Schema::create('link_link_group', function (Blueprint $table) {
+            
             $table->unsignedBigInteger('link_id')->index();
-            $table->foreign('link_id')->references('id')->on('link_groups')->onDelete('cascade');
             $table->unsignedBigInteger('link_group_id')->index();
-            $table->foreign('link_group_id')->references('id')->on('links')->onDelete('cascade');
+            
+            $table->foreign('link_id')->references('id')->on('links')->onDelete('cascade');
+            $table->foreign('link_group_id')->references('id')->on('link_groups')->onDelete('cascade');
+            
             $table->primary(['link_id', 'link_group_id']);
         });
     }
