@@ -20,5 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::middleware('auth:api')->group(function (){
     Route::post('/links', 'LinkController@apiLinks');
     Route::post('/links/new', 'LinkController@apiNewLink');
+    Route::post('/links/delete', 'LinkController@apiDeleteLink');
     Route::post('/linkgroups', 'LinkGroupController@apiLinkGroups');
 });

@@ -121,4 +121,15 @@ class LinkController extends Controller
             return response(422,$formError);
         }
     }
+
+    public function apiDeleteLink(Request $request)
+    {
+        $validatedData = $request->validate([
+            'id' => 'required|exists:links,id'
+        ]);
+
+        Link::destroy($request->id);
+
+        return response($request->id,200);
+    }
 }

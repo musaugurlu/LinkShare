@@ -8,13 +8,18 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-Vue.filter('humanDate', (date, format) => { 
+
+
+Vue.filter('humanDate', (date, format) => {
     if (format) {
         return moment(date).fromNow();
-      } else {
-        return moment(date).format("MMM DD, YYYY hh:mm:ss a"); 
-      }
+    } else {
+        return moment(date).format("MMM DD, YYYY hh:mm:ss a");
+    }
 });
+
+require('./helpers');
+
 
 /**
  * The following block of code may be used to automatically register your

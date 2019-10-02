@@ -34,12 +34,12 @@
                       </div>
                       <form @submit.prevent="submitNewForm">
                         <div class="modal-body">
-                          <div class="alert alert-danger" v-if="Object.keys(formErrors).length">
+                          <div class="alert alert-danger" v-if="Object.keys(newForm.errors).length">
                             <ul>
-                              <li v-for="(error, index) in formErrors" :key="index">ERROR: {{error[0]}}</li>
+                              <li v-for="(error, index) in newForm.errors" :key="index">ERROR: {{error[0]}}</li>
                             </ul>
                           </div>
-                          <div class="alert alert-success" v-if="formSuccess">
+                          <div class="alert alert-success" v-if="newForm.success">
                             Yay! New Link has been created.
                           </div>
                           <div class="row">
@@ -111,10 +111,10 @@
                     <button type="button" title="Visit" class="btn btn-sm btn-outline-info" @click.prevent="goToUrl(link.url)">
                       <i class="mC-10 ti-eye"></i>
                     </button>
-                    <button type="button" title="Edit" class="btn btn-sm btn-outline-info">
+                    <button type="button" title="Edit" class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#NewModel" @click.prevent="initEditForm(link)">
                       <i class="mC-10 ti-pencil"></i>
                     </button>
-                    <button type="button" title="Delete" class="btn btn-sm btn-outline-danger">
+                    <button type="button" title="Delete" class="btn btn-sm btn-outline-danger" @click.prevent="submitDeleteForm(link.id,index)">
                       <i class="mC-10 ti-trash"></i>
                     </button>
                   </td>
@@ -151,8 +151,12 @@ export default {
         linkgroup: ''
       },
       
-      formErrors:[],
-      formSuccess:false
+      newForm : {
+        errors: [],
+        success: false,
+        submitDisable:false
+      }
+
     };
   },
 
@@ -183,25 +187,41 @@ export default {
       return window.location.href + "/" + id;
     },
 
-    goToUrl(url) {
-      window.open(url,'_blank');
+    goToUrl(url,newTab=true) {
+      if (newTab) {
+        window.open(url,'_blank');
+      } else {
+        window.location.href = url;
+      }
       return;
     },
 
     submitNewForm () {
-      this.formErrors = [];
-      this.formSuccess = false;
+      
+      this.newForm.errors = [];
+      this.newForm.success = false;
       
       axios.post('/api/links/new', this.newUrl)
         .then(response => { 
-          this.links.push(resonse.data);
-          this.formSuccess = true;
           this.clearForm();
+          this.links.push(response.data[0]);
+          this.newForm.success = true;
+          this.toast('info','New URL has been created successfully!');
         })
         .catch(error => {
-          this.formErrors = error.response.data.errors;
           this.clearForm();
+          this.newForm.errors = error.response.data.errors;
         });
+    },
+
+    submitDeleteForm (id,index) {
+      this.confirmAction('question','Are you sure?','The link will be deleted. Are you sure?');
+      axios.post('/api/links/delete', {'id': id})
+        .then(response => {
+          this.links.splice(index,1);
+          this.toast('info','The link has been deleted successfully!');
+        })
+        .catch();
     },
 
     clearForm (isClose=false) {
@@ -209,9 +229,13 @@ export default {
       this.newUrl.linkgroup = '';
 
       if (isClose) {
-        this.formErrors = [];
-        this.formSuccess = false;
+        this.newForm.errors = [];
+        this.newForm.success = false;
       }
+    },
+
+    initEditForm(link) {
+      this.newUrl.url = link.url;
     }
   },
 
@@ -225,6 +249,7 @@ export default {
 
   created() {
     this.fetchData();
+    // this.toast('success','Welcome');
   }
 };
 </script>
